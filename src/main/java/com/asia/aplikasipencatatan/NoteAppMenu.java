@@ -54,7 +54,7 @@ public class NoteAppMenu {
                 System.out.print(prompt);
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Input tidak valid. Silakan masukkan angka.");
+                System.out.println("Invalid input. Please enter a number");
                 scanner.nextLine();
             }
         }
