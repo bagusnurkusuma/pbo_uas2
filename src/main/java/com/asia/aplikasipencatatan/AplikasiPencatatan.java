@@ -5,10 +5,10 @@ package com.asia.aplikasipencatatan;
 
 /**
  *
- * @author STATION20B
+ * @author Bagus Nur Kusuma(23201014)
  */
 public class AplikasiPencatatan {
-//    Septian Dwi Cahya (23201032)
+
     public static void main(String[] args) {
         NoteAppMenu noteapp = new NoteAppMenu("notes.db");
         noteapp.start();

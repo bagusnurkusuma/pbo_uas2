@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  *
- * @author STATION20B
+ * @author Bagus Nur Kusuma(23201014)
  */
 public class NoteService {
 

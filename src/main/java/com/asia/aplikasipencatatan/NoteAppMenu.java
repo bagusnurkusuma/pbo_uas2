@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author STATION20B
+ * @author Bagus Nur Kusuma(23201014)
  */
 public class NoteAppMenu {
 
@@ -23,32 +23,25 @@ public class NoteAppMenu {
     }
 
     public void start() {
-        boolean isRunning = true;
-        while (isRunning) {
-            displayMainMenu();
-            int choice = readInt("Enter your choice (1 - 4): ");
-            switch (choice) {
-                case 1:
-                    addNote();
-                    break;
-                case 2:
-                    showNotes();
-                    break;
-                case 3:
-                    deleteNote();
-                    break;
-                case 4:
-                    isRunning = false;
-                    break;
-                default:
-                    System.out.println("Choice is invalid. Please try again.");
-                    break;
+        while (true) {
+            tampilkanMenu();
+            int pilihan = readInt("Enter your choice (1 - 4): ");
+            if (pilihan == 1) {
+                tambahCatatan();
+            } else if (pilihan == 2) {
+                tampilCatatan();
+            } else if (pilihan == 3) {
+                hapusCatatan();
+            } else {
+                System.out.println("Exiting...");
+                break;
             }
         }
     }
 
-    private void displayMainMenu() {
-        System.out.println("Note App Menu: Oleh Septian Dwi Cahya NIM: 23201032");
+    private void tampilkanMenu() {
+        System.out.println("");
+        System.out.println("Note App Menu: Oleh Bagus Nur Kusuma NIM: 23201014");
         System.out.println("1. Add Note");
         System.out.println("2. Show Notes");
         System.out.println("3. Delete Note");
@@ -62,52 +55,61 @@ public class NoteAppMenu {
                 return scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Input tidak valid. Silakan masukkan angka.");
-                scanner.nextLine(); // Mengkonsumsi input yang salah
+                scanner.nextLine();
             }
         }
     }
 
-    private void addNote() {
+    private void tambahCatatan() {
         System.out.print("Enter note: ");
         if (scanner.hasNextInt() || scanner.hasNextLine()) {
             scanner.nextLine();
         }
-        String note = scanner.nextLine();
-        noteService.createNote(note);
-        System.out.println("Note Saved: " + note);
+        String input = scanner.nextLine();
+        noteService.createNote(input);
+        System.out.println("Note Saved : " + input);
     }
 
-    private void showNotes() {
+    private void tampilCatatan() {
         List<String> notes = noteService.readNotes();
-        System.out.println("Saved Notes:");
         if (notes.isEmpty()) {
-            System.out.println("No notes found.");
+            System.out.println("Notes is empty");
         } else {
+            System.out.println("Saved Notes :");
+            int index = 1;
             for (String note : notes) {
-                System.out.println(note);
+                System.out.println(index + ". " + note);
+                index += 1;
             }
         }
     }
 
-    private void deleteNote() {
+    private void hapusCatatan() {
         List<String> notes = noteService.readNotes();
-        System.out.println("Saved Notes:");
         if (notes.isEmpty()) {
-            System.out.println("No notes found.");
+            System.out.println("Notes is empty");
         } else {
+            System.out.println("Saved Notes :");
+            int index = 1;
             for (String note : notes) {
-                System.out.println(note);
+                System.out.println(index + ". " + note);
+                index += 1;
+            }
+
+            int total_catatan = noteService.getNoteCount();
+            System.out.print("Enter the note index to delete (1 - " + total_catatan + "): ");
+            if (scanner.hasNextInt() || scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
+
+            int input = scanner.nextInt();
+            if (total_catatan >= input) {
+                String catatan_dipilih = noteService.getNoteByIndex(input - 1);
+                noteService.deleteNote(catatan_dipilih);
+                System.out.println("Notes Deleted: " + catatan_dipilih);
+            } else {
+                System.out.println("Notes with index : "+input+" ,not found");
             }
         }
-
-        int noteSize = noteService.getNoteCount();
-        System.out.print("Enter the note index to delete (1 - " + noteSize + "): ");
-        if (scanner.hasNextInt() || scanner.hasNextLine()) {
-            scanner.nextLine();
-        }
-        int note = scanner.nextInt();
-        String noteDipilih = noteService.getNoteByIndex(note - 1);
-        noteService.deleteNote(noteDipilih);
-        System.out.println("Note deleted: " + noteDipilih);
     }
 }

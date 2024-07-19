@@ -13,10 +13,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author STATION20B
- */
 public class DatabaseStorage implements DataStorage {
 
     private Connection connection;
